@@ -1,4 +1,4 @@
-package pres.swegnhan.packhelper.infrastructure.repository;
+package pres.swegnhan.packhelper.application;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,16 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import pres.swegnhan.packhelper.core.packpackage.Package;
-import pres.swegnhan.packhelper.core.packpackage.PackageRepository;
+import pres.swegnhan.packhelper.core.Package;
+import pres.swegnhan.packhelper.application.commandservice.PackageCommandService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE )
-public class PackageRepositoryTest {
+public class PackageCommandServiceTest {
 
     @Autowired
-    private PackageRepository packageRepository;
+    private PackageCommandService packageCommandService;
 
     private Package pack;
 
@@ -33,7 +33,7 @@ public class PackageRepositoryTest {
 
     @Test
     public void for_debug() throws Exception{
-        packageRepository.save(pack, "/home/swegnhan/IdeaProjects/packhelpercrash/apache2_2.4.29-1ubuntu4.5_amd64.deb");
+        System.out.println(packageCommandService);
     }
 
 }

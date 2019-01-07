@@ -1,15 +1,15 @@
-package pres.swegnhan.packhelper.infrastructure.mybatis.mapper;
+package pres.swegnhan.packhelper.infrastructure.commandrepository;
 
-import pres.swegnhan.packhelper.core.packpackage.Package;
-import pres.swegnhan.packhelper.core.packpackage.SupportSystem;
+import org.springframework.stereotype.Repository;
+import pres.swegnhan.packhelper.core.Package;
+import pres.swegnhan.packhelper.core.SupportSystem;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 @Mapper
-@Component
-public interface PackageMapper {
+@Repository
+public interface PackageRepository {
 
     void insert(@Param("pack") Package pack);
 

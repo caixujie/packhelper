@@ -1,4 +1,4 @@
-package pres.swegnhan.packhelper.infrastructure.mybaits.mapper;
+package pres.swegnhan.packhelper.infrastructure.commandrepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,9 +7,9 @@ import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.context.junit4.SpringRunner;
-import pres.swegnhan.packhelper.core.packpackage.Package;
-import pres.swegnhan.packhelper.core.packpackage.SupportSystem;
-import pres.swegnhan.packhelper.infrastructure.mybatis.mapper.PackageMapper;
+import pres.swegnhan.packhelper.core.Package;
+import pres.swegnhan.packhelper.core.SupportSystem;
+import pres.swegnhan.packhelper.infrastructure.commandrepository.PackageRepository;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -19,10 +19,10 @@ import static org.hamcrest.core.IsEqual.equalTo;
 @MybatisTest
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE )
-public class PackageMapperTest {
+public class PackageRepositoryTest {
 
     @Autowired
-    private PackageMapper packageMapper;
+    private PackageRepository packageRepository;
 
     private Package pack;
 
@@ -44,44 +44,44 @@ public class PackageMapperTest {
 
     @Test
     public void should_supportsystem_insert_select_success() throws Exception{
-        packageMapper.insertSupportSystem(supportSystem);
-        assertThat(packageMapper.findSupportSystem(supportSystem), is(true));
+        packageRepository.insertSupportSystem(supportSystem);
+        assertThat(packageRepository.findSupportSystem(supportSystem), is(true));
     }
 
     @Test
     public void should_package_insert_selec_success() throws Exception{
-        packageMapper.insert(pack);
-        assertThat(pack, equalTo(packageMapper.findByUid(pack.getUid())));
+        packageRepository.insert(pack);
+        assertThat(pack, equalTo(packageRepository.findByUid(pack.getUid())));
     }
 
     @Test
     public void should_package_update_success() throws Exception{
-        packageMapper.insert(pack);
+        packageRepository.insert(pack);
         pack.setName("openjdk-11-jdk");
         pack.setVersion("10.0.2+13-1ubuntu0.18.04.2");
         pack.setCategory(2);
         pack.setUrl("usr/bin/packhelper/openjdk-11-jdk_10.0.2+13-1ubuntu0.18.04.2_amd64.rpm");
         pack.setFiletype(".rpm");
-        packageMapper.update(pack);
-        assertThat(pack, equalTo(packageMapper.findByUid(pack.getUid())));
+        packageRepository.update(pack);
+        assertThat(pack, equalTo(packageRepository.findByUid(pack.getUid())));
     }
 
     @Test
     public void should_package_insert_select_delete_update_success() throws Exception{
-        packageMapper.insert(pack);
-        packageMapper.delete(pack.getUid());
-        assertThat(packageMapper.findByUid(pack.getUid()), is(nullValue()));
+        packageRepository.insert(pack);
+        packageRepository.delete(pack.getUid());
+        assertThat(packageRepository.findByUid(pack.getUid()), is(nullValue()));
     }
 
     @Test
     public void should_packge_supportsystem_relation_insert_success() throws Exception{
-        packageMapper.insert(pack);
+        packageRepository.insert(pack);
         for(SupportSystem sups : pack.getSupsList()){
-            if(!packageMapper.findSupportSystem(sups))
-                packageMapper.insertSupportSystem(sups);
-            packageMapper.insertPackSupsRelation(pack.getUid(), sups.getUid());
+            if(!packageRepository.findSupportSystem(sups))
+                packageRepository.insertSupportSystem(sups);
+            packageRepository.insertPackSupsRelation(pack.getUid(), sups.getUid());
         }
-        assertThat(packageMapper.findByNameVersion(pack.getName(), pack.getVersion()), equalTo(pack));
+        assertThat(packageRepository.findByNameVersion(pack.getName(), pack.getVersion()), equalTo(pack));
     }
 
 }

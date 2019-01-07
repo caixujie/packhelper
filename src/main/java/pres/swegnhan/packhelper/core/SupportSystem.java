@@ -1,4 +1,4 @@
-package pres.swegnhan.packhelper.core.packpackage;
+package pres.swegnhan.packhelper.core;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

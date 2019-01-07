@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="pres.swegnhan.packhelper.infrastructure.mybatis.mapper.PackageMapper">
+<mapper namespace="pres.swegnhan.packhelper.infrastructure.commandrepository.PackageRepository">
 
     <insert id="insert">
         insert into tb_package(uid, name, version, category, url, filetype)
@@ -76,7 +76,7 @@
         where S.name = #{sups.name} and S.version = #{sups.version}
     </select>
 
-    <resultMap id="packages" type="pres.swegnhan.packhelper.core.packpackage.Package">
+    <resultMap id="packages" type="pres.swegnhan.packhelper.core.Package">
         <id column="packUid" property="uid"/>
         <result column="packName" property="name"/>
         <result column="packVersion" property="version"/>
@@ -86,7 +86,7 @@
         <collection property="supsList" ofType="arraylist" resultMap="supportsystems"/>
     </resultMap>
 
-    <resultMap id="supportsystems" type="pres.swegnhan.packhelper.core.packpackage.SupportSystem">
+    <resultMap id="supportsystems" type="pres.swegnhan.packhelper.core.SupportSystem">
         <id column="supsUid" property="uid" />
         <result column="supsName" property="name"/>
         <result column="supsVersion" property="version"/>

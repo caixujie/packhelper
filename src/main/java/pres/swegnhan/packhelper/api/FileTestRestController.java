@@ -1,4 +1,4 @@
-package pres.swegnhan.packhelper.web;
+package pres.swegnhan.packhelper.api;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

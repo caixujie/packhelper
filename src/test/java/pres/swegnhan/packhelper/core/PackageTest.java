@@ -1,9 +1,8 @@
-package pres.swegnhan.packhelper.core.packpackage;
+package pres.swegnhan.packhelper.core;
 
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
