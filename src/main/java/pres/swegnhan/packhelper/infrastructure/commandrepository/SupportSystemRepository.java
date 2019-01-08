@@ -11,6 +11,8 @@ public interface SupportSystemRepository {
 
     void insert(@Param("sups") SupportSystem sups);
 
+    SupportSystem findByUid(@Param("uid") String uid);
+
     SupportSystem findByNameVersion(@Param("name") String name, @Param("version") String version);
 
     void delete(@Param("uid") String uid);

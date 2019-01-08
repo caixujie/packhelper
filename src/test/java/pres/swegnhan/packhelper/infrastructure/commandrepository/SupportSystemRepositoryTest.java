@@ -36,7 +36,7 @@ public class SupportSystemRepositoryTest {
     @Test
     public void should_supportsystem_insert_select_success() throws Exception{
         supportSystemRepository.insert(sups);
-        assertThat(sups, equalTo(supportSystemRepository.findByNameVersion(sups.getName(), sups.getVersion())));
+        assertThat(sups, equalTo(supportSystemRepository.findByUid(sups.getUid())));
     }
 
     @Test

@@ -11,6 +11,15 @@
           #{sups.version})
     </insert>
 
+    <select id="findByUid" resultMap="supportsystems">
+        select
+          uid supsUid,
+          name supsName,
+          version supsVersion
+        from tb_support_system
+        where uid = #{uid}
+    </select>
+
     <select id="findByNameVersion" resultMap="supportsystems">
         select
           uid supsUid,

@@ -46,20 +46,19 @@ public class MyBatisPackageCommandService implements PackageCommandService {
     @Override
     @Transactional
     public void update(Package pack) throws Exception {
-        Package updatePack = packageRepository.findByNameVersion(pack.getName(), pack.getVersion());
+        Package updatePack = packageRepository.findByUid(pack.getUid());
         if(updatePack == null)
             throw new Exception();
-        pack.setUid(updatePack.getUid());
         packageRepository.update(pack);
     }
 
     @Override
     @Transactional
     public void update(Package pack, String tempFilePath) throws Exception {
-        Package updatePack = packageRepository.findByNameVersion(pack.getName(), pack.getVersion());
+        Package updatePack = packageRepository.findByUid(pack.getUid());
         if(updatePack == null)
             throw new Exception();
-        pack.setUid(updatePack.getUid());
+        updatePack.setUrl("");
         packageRepository.update(pack);
         FileUtils.copyFileToDirectory(new File(tempFilePath), new File(DEB_HUB_PATH));
     }
@@ -99,52 +98,48 @@ public class MyBatisPackageCommandService implements PackageCommandService {
 
     @Override
     @Transactional
-    public void remove(Package pack) throws Exception {
-        Package removePack = packageRepository.findByNameVersion(pack.getName(), pack.getVersion());
+    public Optional<Package> findByNameVersion(String name, String version) {
+        Package pack = packageRepository.findByNameVersion(name, version);
+        if(pack == null)
+            return Optional.empty();
+        return Optional.of(pack);
+    }
+
+    @Override
+    @Transactional
+    public void remove(String uid) throws Exception {
+        Package removePack = packageRepository.findByUid(uid);
         if(removePack == null)
             throw new Exception();
         packageRepository.delete(removePack.getUid());
+        FileUtils.deleteQuietly(new File(removePack.getUrl()));
     }
 
-    @Override
-    public void createSupportSystem(SupportSystem sups) throws Exception {
-        if(packageRepository.findSupportSystem(sups))
-            throw new Exception();
-        packageRepository.insertSupportSystem(sups);
-    }
-
-    @Override
-    public void removeSupportSystem(SupportSystem sups) throws Exception {
-        if(!packageRepository.findSupportSystem(sups))
-            throw new Exception();
-//        packageMapper.delete();
-    }
-
-    public static void main(String[] args){
-        String context = "Package: PackHelper";
-        Pattern namePattern = Pattern.compile("Package: ((.*))");
-        Matcher nameMatcher = namePattern.matcher(context);
-        while(nameMatcher.find()){
-            for(int i = 0; i < nameMatcher.groupCount(); i++)
-                System.out.println("[" + nameMatcher.group(i) + ']');
-        }
-    }
+//    public static void main(String[] args){
+//        String context = "Package: PackHelper";
+//        Pattern namePattern = Pattern.compile("Package: ((.*))");
+//        Matcher nameMatcher = namePattern.matcher(context);
+//        while(nameMatcher.find()){
+//            for(int i = 0; i < nameMatcher.groupCount(); i++)
+//                System.out.println("[" + nameMatcher.group(i) + ']');
+//        }
+//    }
 
 }
 
-class DebAnalysisPattern{
-
-    private static Pattern packagePattern = Pattern.compile("Package: ((.*))");
-
-    private static Pattern versionPattern = Pattern.compile("Version: ((.*))");
-
-    public static void debAnalysis(Package pack, String context) {
-        Matcher packageMatcher = packagePattern.matcher(context);
-        if (packageMatcher.find())
-            pack.setName(packageMatcher.group(1));
-        Matcher versionMatcher = versionPattern.matcher(context);
-        if (versionMatcher.find())
-            pack.setVersion(versionMatcher.group(1));
-    }
-
-}
+//class DebAnalysisPattern{
+//
+//    private static Pattern packagePattern = Pattern.compile("Package: ((.*))");
+//
+//    private static Pattern versionPattern = Pattern.compile("Version: ((.*))");
+//
+//    public static void debAnalysis(Package pack, String context) {
+//        Matcher packageMatcher = packagePattern.matcher(context);
+//        if (packageMatcher.find())
+//            pack.setName(packageMatcher.group(1));
+//        Matcher versionMatcher = versionPattern.matcher(context);
+//        if (versionMatcher.find())
+//            pack.setVersion(versionMatcher.group(1));
+//    }
+//
+//}

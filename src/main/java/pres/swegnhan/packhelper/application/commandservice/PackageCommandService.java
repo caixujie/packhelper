@@ -13,14 +13,10 @@ public interface PackageCommandService {
 
     void update(Package pack, String tempFilePath) throws Exception;
 
-//    void saveWithAnalysis(Package pack, String tempFilePath) throws Exception;
-
     Optional<Package> findByUid(String uid);
 
-    void remove(Package pack) throws Exception;
+    Optional<Package> findByNameVersion(String name, String version);
 
-    void createSupportSystem(SupportSystem sups) throws Exception;
-
-    void removeSupportSystem(SupportSystem sups) throws Exception;
+    void remove(String uid) throws Exception;
 
 }
