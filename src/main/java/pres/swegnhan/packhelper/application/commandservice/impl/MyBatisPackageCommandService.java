@@ -11,6 +11,7 @@ import pres.swegnhan.packhelper.core.SupportSystem;
 import pres.swegnhan.packhelper.infrastructure.commandrepository.PackageRepository;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,10 +20,10 @@ import java.util.regex.Pattern;
 public class MyBatisPackageCommandService implements PackageCommandService {
 
     @Value("${pers.swegnhan.packhelper.debhubpath}")
-    private String DEB_HUB_PATH;
+    private String PACK_HUB_PATH;
 
-//    @Value("${pres.swegnhan.packhelper.tempdirpath}")
-//    private String TEMP_DIR_PATH;
+    @Value("${pres.swegnhan.packhelper.tempdirpath}")
+    private String TEMP_DIR_PATH;
 
 //    @Value("${pres.swegnhan.packhelper.debunzipshellpath}")
 //    private String DEB_UNZIP_SHELL_PATH;
@@ -32,40 +33,43 @@ public class MyBatisPackageCommandService implements PackageCommandService {
 
     @Override
     @Transactional
-    public void create(Package pack, String tempFilePath) throws Exception {
+    public void create(Package pack, String tempFileName) throws RuntimeException {
         if(packageRepository.findByNameVersion(pack.getName(), pack.getVersion()) != null)
-            throw new Exception();
+            throw new RuntimeException();
+        pack.setUrl(PACK_HUB_PATH + '/' + tempFileName);
         packageRepository.insert(pack);
         for(SupportSystem sups : pack.getSupsList()) {
             if(packageRepository.findSupportSystem(sups))
                 packageRepository.insertPackSupsRelation(pack.getUid(), sups.getUid());
         }
-        FileUtils.copyFileToDirectory(new File(tempFilePath), new File(DEB_HUB_PATH));
+        try {
+            FileUtils.copyFileToDirectory(new File(TEMP_DIR_PATH + '/' + tempFileName), new File(PACK_HUB_PATH));
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+        FileUtils.deleteQuietly(new File(TEMP_DIR_PATH + '/' + tempFileName));
     }
 
     @Override
     @Transactional
-    public void update(Package pack) throws Exception {
+    public void update(Package pack, String tempFileName) throws RuntimeException {
         Package updatePack = packageRepository.findByUid(pack.getUid());
-        if(updatePack == null)
-            throw new Exception();
+        if (updatePack == null)
+            throw new RuntimeException();
+        updatePack.setUrl(PACK_HUB_PATH + '/' + tempFileName);
         packageRepository.update(pack);
-    }
-
-    @Override
-    @Transactional
-    public void update(Package pack, String tempFilePath) throws Exception {
-        Package updatePack = packageRepository.findByUid(pack.getUid());
-        if(updatePack == null)
-            throw new Exception();
-        updatePack.setUrl("");
-        packageRepository.update(pack);
-        FileUtils.copyFileToDirectory(new File(tempFilePath), new File(DEB_HUB_PATH));
+        if (tempFileName != null) {
+            try {
+                FileUtils.copyFileToDirectory(new File(TEMP_DIR_PATH + '/' + tempFileName), new File(PACK_HUB_PATH));
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+        }
     }
 
 //    @Override
 //    @Transactional
-//    public void saveWithAnalysis(Package pack, String tempFilePath) throws Exception{
+//    public void saveWithAnalysis(Package pack, String tempFilePath) throws RuntimeException{
 //        String tempThreadFolder = UUID.randomUUID().toString();
 //        try {
 //            Process unzipProcess = Runtime.getRuntime().exec(DEB_UNZIP_SHELL_PATH + " " + tempFilePath + " " + tempThreadFolder);
@@ -79,7 +83,7 @@ public class MyBatisPackageCommandService implements PackageCommandService {
 //                    packageMapper.insertPackSupsRelation(pack.getUid(), sups.getUid());
 //            }
 //            FileUtils.copyFileToDirectory(new File(tempFilePath), new File(DEB_HUB_PATH));
-//        }catch (Exception e){ throw e; }
+//        }catch (RuntimeException e){ throw e; }
 //        finally {
 //            File tempDir = new File(TEMP_DIR_PATH + '/' + tempThreadFolder);
 //            if(tempDir.exists() && tempDir.isDirectory())
@@ -107,10 +111,10 @@ public class MyBatisPackageCommandService implements PackageCommandService {
 
     @Override
     @Transactional
-    public void remove(String uid) throws Exception {
+    public void remove(String uid) throws RuntimeException {
         Package removePack = packageRepository.findByUid(uid);
         if(removePack == null)
-            throw new Exception();
+            throw new RuntimeException();
         packageRepository.delete(removePack.getUid());
         FileUtils.deleteQuietly(new File(removePack.getUrl()));
     }

@@ -7,16 +7,14 @@ import java.util.Optional;
 
 public interface PackageCommandService {
 
-    void create(Package pack, String tempFilePath) throws Exception;
+    void create(Package pack, String tempFilePath) throws RuntimeException;
 
-    void update(Package pack) throws Exception;
-
-    void update(Package pack, String tempFilePath) throws Exception;
+    void update(Package pack, String tempFilePath) throws RuntimeException;
 
     Optional<Package> findByUid(String uid);
 
     Optional<Package> findByNameVersion(String name, String version);
 
-    void remove(String uid) throws Exception;
+    void remove(String uid) throws RuntimeException;
 
 }

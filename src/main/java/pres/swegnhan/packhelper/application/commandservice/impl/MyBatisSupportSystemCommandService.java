@@ -15,9 +15,9 @@ public class MyBatisSupportSystemCommandService implements SupportSystemCommandS
     private SupportSystemRepository supportSystemRepository;
 
     @Override
-    public void create(SupportSystem sups) throws Exception {
+    public void create(SupportSystem sups) throws RuntimeException {
         if(supportSystemRepository.findByNameVersion(sups.getName(), sups.getVersion()) != null)
-            throw new Exception();
+            throw new RuntimeException();
         supportSystemRepository.insert(sups);
     }
 
@@ -38,9 +38,9 @@ public class MyBatisSupportSystemCommandService implements SupportSystemCommandS
     }
 
     @Override
-    public void remove(String uid) throws Exception {
+    public void remove(String uid) throws RuntimeException {
         if(supportSystemRepository.findByUid(uid) == null)
-            throw new Exception();
+            throw new RuntimeException();
         supportSystemRepository.delete(uid);
     }
 

@@ -7,12 +7,12 @@ import java.util.Optional;
 
 public interface SupportSystemCommandService {
 
-    void create(SupportSystem sups) throws Exception;
+    void create(SupportSystem sups) throws RuntimeException;
 
     Optional<SupportSystem> findByUid(String uid);
 
     Optional<SupportSystem> findByNameVersion(String name, String verion);
 
-    void remove(String uid) throws Exception;
+    void remove(String uid) throws RuntimeException;
 
 }
