@@ -13,6 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import pres.swegnhan.packhelper.application.commandservice.PackageCommandService;
 import pres.swegnhan.packhelper.core.Package;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
+
 @WebMvcTest({PackageApi.class})
 public class PackageApiTest {
 
@@ -48,7 +53,7 @@ public class PackageApiTest {
                 param("filetype", pack.getFiletype()).
                 param("supsList", pack.getSupsList()).
                 when().post("/package").
-                then().statusCode(200).body("content", "");
+                then().statusCode(200).body("content", equalTo(nullValue()));
     }
 
 }

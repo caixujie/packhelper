@@ -1,5 +1,6 @@
 package pres.swegnhan.packhelper.api;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,10 @@ public class PackageApi {
     private PackageCommandService packageCommandService;
 
     @PostMapping
-    public ResponseEntity<?> createPackage(Package pack, String filename){
+    public ResponseEntity<?> createPackage(TransPackageData tpd){
         HttpStatus status;
         try{
-            packageCommandService.create(pack, filename);
+            packageCommandService.create(new Package(tpd.getName(), tpd.getVersion(), tpd.getCategory(), tpd.getCategory(), tpd.getFiletype(), tpd.getSupsList()), tpd.getFilename());
             status = HttpStatus.OK;
         }catch (Exception e){
             status = HttpStatus.CONFLICT;
@@ -54,5 +55,22 @@ public class PackageApi {
     public ResponseEntity<?> findPackageByNameVersion(String name, String version){
         return ResponseEntity.of(packageCommandService.findByNameVersion(name, version));
     }
+
+}
+
+@Data
+class TransPackageData{
+
+    private String name;
+
+    private String version;
+
+    private String category;
+
+    private String filetype;
+
+    private String[] supsList;
+
+    private String filename;
 
 }
