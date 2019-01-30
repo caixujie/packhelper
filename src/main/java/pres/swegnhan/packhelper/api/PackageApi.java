@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import pres.swegnhan.packhelper.application.commandservice.PackageCommandService;
 import pres.swegnhan.packhelper.core.Package;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/package")
 public class PackageApi {
@@ -19,7 +21,7 @@ public class PackageApi {
     public ResponseEntity<?> createPackage(TransPackageData tpd){
         HttpStatus status;
         try{
-            packageCommandService.create(new Package(tpd.getName(), tpd.getVersion(), tpd.getCategory(), tpd.getCategory(), tpd.getFiletype(), tpd.getSupsList()), tpd.getFilename());
+            packageCommandService.create(new Package(tpd.getName(), tpd.getVersion(), tpd.getCategory(), tpd.getFiletype(), tpd.getSupsList()), tpd.getFilename());
             status = HttpStatus.OK;
         }catch (Exception e){
             status = HttpStatus.CONFLICT;
@@ -69,7 +71,7 @@ class TransPackageData{
 
     private String filetype;
 
-    private String[] supsList;
+    private List<String> supsList;
 
     private String filename;
 
