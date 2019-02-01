@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.test.context.junit4.SpringRunner;
 import pres.swegnhan.packhelper.core.Package;
 import pres.swegnhan.packhelper.core.SupportSystem;
-import pres.swegnhan.packhelper.infrastructure.commandrepository.PackageRepository;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;

@@ -37,3 +37,16 @@ CREATE TABLE `rel_pack_sups` (
   CONSTRAINT `rel_pack_sups_ibfk_1` FOREIGN KEY (`pack_uid`) REFERENCES `tb_package` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `rel_pack_sups_ibfk_2` FOREIGN KEY (`sups_uid`) REFERENCES `tb_support_system` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `tb_comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` varchar(255) NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `content` varchar(512) NOT NULL,
+  `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `pack_uid` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uid` (`uid`),
+  KEY `pack_uid` (`pack_uid`),
+  CONSTRAINT `tb_comment_ibfk_1` FOREIGN KEY (`pack_uid`) REFERENCES `tb_package` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1

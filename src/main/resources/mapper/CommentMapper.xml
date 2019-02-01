@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pres.swegnhan.packhelper.infrastructure.commandrepository.CommentRepository">
+
+    <insert id="insert">
+        insert into tb_comment(uid, ip, content, create_at, pack_uid)
+        values (
+            #{comment.uid},
+            #{comment.ip},
+            #{comment.content},
+            #{comment.createAt},
+            #{comment.packUid})
+    </insert>
+
+
+    <update id="update">
+        update tb_comment
+        <set>
+            <if test="comment.ip != ''">ip = #{comment.ip},</if>
+            <if test="comment.content != ''">content = #{comment.content},</if>
+            create_at = #{comment.createAt}
+        </set>
+        where uid = #{comment.uid}
+    </update>
+
+    <delete id="delete">
+        delete from tb_comment where uid = #{uid}
+    </delete>
+
+
+    <select id="findByUid" resultType="pres.swegnhan.packhelper.core.Comment">
+        select
+        uid,
+        ip,
+        content,
+        create_at,
+        pack_uid
+        from tb_comment
+        where uid = #{uid}
+    </select>
+
+    <!--<resultMap id="comment" type="pres.swegnhan.packhelper.core.Comment" autoMapping="true">-->
+        <!--<id column="uid" property="uid" />-->
+        <!--<result column="create_at" property="createAt" javaType="org.joda.time.DateTime" jdbcType="TIMESTAMP"/>-->
+        <!--<result column="pack_uid" property="packUid"/>-->
+    <!--</resultMap>-->
+
+
+
+
+
+</mapper>
