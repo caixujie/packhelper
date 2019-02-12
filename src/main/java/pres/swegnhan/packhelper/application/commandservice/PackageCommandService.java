@@ -1,13 +1,14 @@
 package pres.swegnhan.packhelper.application.commandservice;
 
 import pres.swegnhan.packhelper.core.Package;
+import pres.swegnhan.packhelper.core.PackageCommandItem;
 import pres.swegnhan.packhelper.core.SupportSystem;
 
 import java.util.Optional;
 
 public interface PackageCommandService {
 
-    void create(Package pack, String tempFilePath) throws RuntimeException;
+    void create(PackageCommandItem pci) throws RuntimeException;
 
     void update(Package pack, String tempFilePath) throws RuntimeException;
 

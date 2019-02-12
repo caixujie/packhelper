@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pres.swegnhan.packhelper.application.commandservice.PackageCommandService;
 import pres.swegnhan.packhelper.core.Package;
+import pres.swegnhan.packhelper.core.PackageCommandItem;
 import pres.swegnhan.packhelper.core.SupportSystem;
 import pres.swegnhan.packhelper.infrastructure.commandrepository.PackageRepository;
 
@@ -33,21 +34,26 @@ public class MyBatisPackageCommandService implements PackageCommandService {
 
     @Override
     @Transactional
-    public void create(Package pack, String tempFileName) throws RuntimeException {
+    public void create(PackageCommandItem pci) throws RuntimeException {
+        Package pack = new Package(pci.getName(),
+                                   pci.getVersion(),
+                                   pci.getCategory(),
+                                   pci.getFiletype(),
+                                   pci.getSupsList());
         if(packageRepository.findByNameVersion(pack.getName(), pack.getVersion()) != null)
             throw new RuntimeException();
-        pack.setUrl(PACK_HUB_PATH + '/' + tempFileName);
+        pack.setUrl(PACK_HUB_PATH + '/' + pci.getPackFileName());
         packageRepository.insert(pack);
         for(SupportSystem sups : pack.getSupsList()) {
             if(packageRepository.findSupportSystem(sups))
                 packageRepository.insertPackSupsRelation(pack.getUid(), sups.getUid());
         }
         try {
-            FileUtils.copyFileToDirectory(new File(TEMP_DIR_PATH + '/' + tempFileName), new File(PACK_HUB_PATH));
+            FileUtils.copyFileToDirectory(new File(TEMP_DIR_PATH + '/' + pci.getPackFileName()), new File(PACK_HUB_PATH));
         } catch (IOException e) {
             throw new RuntimeException();
         }
-        FileUtils.deleteQuietly(new File(TEMP_DIR_PATH + '/' + tempFileName));
+        FileUtils.deleteQuietly(new File(TEMP_DIR_PATH + '/' + pci.getPackFileName()));
     }
 
     @Override

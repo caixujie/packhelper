@@ -20,7 +20,6 @@ public class SupportSystem {
     private String version;
 
     public SupportSystem(String input){
-        this.uid = UUID.randomUUID().toString();
         this.name = input.substring(0, input.indexOf('|'));
         this.version = input.substring(input.indexOf('|') + 1);
     }
@@ -30,5 +29,4 @@ public class SupportSystem {
         this.name = name;
         this.version = version;
     }
-
 }

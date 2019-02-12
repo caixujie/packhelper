@@ -16,9 +16,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import pres.swegnhan.packhelper.application.commandservice.PackageCommandService;
 import pres.swegnhan.packhelper.core.Package;
+import pres.swegnhan.packhelper.core.PackageCommandItem;
+import pres.swegnhan.packhelper.core.SupportSystem;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -41,33 +45,44 @@ public class PackageApiTest {
     @MockBean
     private PackageCommandService packageCommandService;
 
-    private TransPackageData tpd;
+    private PackageCommandItem pci;
 
     @Before
     public void setUp() throws Exception{
         RestAssuredMockMvc.mockMvc(mvc);
-        tpd = new TransPackageData();
-        tpd.setName("apache2");
-        tpd.setVersion("2.4.29-1ubuntu4.5");
-        tpd.setCategory("1");
-        tpd.setFiletype(".deb");
-        tpd.setFilename("apache2_2.4.29-1ubuntu4.5_amd64.deb");
+        pci = new PackageCommandItem();
+        pci.setName("apache2");
+        pci.setVersion("2.4.29-1ubuntu4.5");
+        pci.setCategory("1");
+        pci.setFiletype(".deb");
+        pci.setSupsList(new SupportSystem[]{new SupportSystem("ubuntu|16.04")});
+        pci.setPackFileName("apache2_2.4.29-1ubuntu4.5_amd64.deb");
     }
 
     @Test
     @Rollback
     public void should_create_package_success() throws Exception{
-        FileUtils.copyFileToDirectory(new File("src/test/resources/" + tpd.getFilename()), new File(TEMP_DIR_PATH));
-        RestAssuredMockMvc.given().
-                param("name", tpd.getName()).
-                param("version", tpd.getVersion()).
-                param("category", tpd.getCategory()).
-                param("filetype", tpd.getFiletype()).
-                param("supsList", Arrays.asList(tpd.getSupsList())).
-                param("filename", tpd.getFilename()).
-                when().post("/package").
-                then().statusCode(200).body("content", equalTo(""));
-        FileUtils.deleteQuietly(new File(PACK_HUB_PATH + '/' + tpd.getFilename()));
+        FileUtils.copyFileToDirectory(new File("src/test/resources/" + pci.getPackFileName()), new File(TEMP_DIR_PATH));
+        RestAssuredMockMvc.given().contentType("application/json").body(new HashMap<String, Object>(){
+            {
+                {
+                    put("name", pci.getName());
+                    put("version", pci.getVersion());
+                    put("category", pci.getCategory());
+                    put("filetype", pci.getFiletype());
+                    put("supsList", pci.getSupsList());
+                    put("packFileName", pci.getPackFileName());
+                }
+            }
+        }).when().post("/package").then().statusCode(200);
+        Package packMirror = packageCommandService.findByNameVersion(pci.getName(), pci.getVersion()).get();
+        assertThat(pci.getName(), equalTo(packMirror.getName()));
+        assertThat(pci.getVersion(), equalTo(packMirror.getVersion()));
+        assertThat(Integer.valueOf(pci.getCategory()), equalTo(packMirror.getCategory()));
+        assertThat(pci.getFiletype(), equalTo(packMirror.getFiletype()));
+        assertThat(Arrays.asList(pci.getSupsList()), equalTo(packMirror.getSupsList()));
+        assertThat(new File(PACK_HUB_PATH + '/' + pci.getPackFileName()).exists(), is(true));
+        FileUtils.deleteQuietly(new File(PACK_HUB_PATH + '/' + pci.getPackFileName()));
     }
 
 }

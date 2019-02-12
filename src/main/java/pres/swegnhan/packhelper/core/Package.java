@@ -41,6 +41,15 @@ public class Package {
         this.supsList = Arrays.stream(supsList).collect(toSet()).stream().map(SupportSystem::new).collect(toList());
     }
 
+    public Package(String name, String version, String category, String filetype ,SupportSystem[] supsList){
+        this.uid = UUID.randomUUID().toString();
+        this.name = name;
+        this.version = version;
+        this.category = Integer.valueOf(category);
+        this.filetype = filetype;
+        this.supsList = Arrays.asList(supsList);
+    }
+
     public Package(String name, String version, String category, String url, String filetype ,String[] supsList){
         this.uid = UUID.randomUUID().toString();
         this.name = name;

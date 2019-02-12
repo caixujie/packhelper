@@ -7,7 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pres.swegnhan.packhelper.application.commandservice.PackageCommandService;
 import pres.swegnhan.packhelper.core.Package;
+import pres.swegnhan.packhelper.core.PackageCommandItem;
+import pres.swegnhan.packhelper.core.SupportSystem;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -18,10 +21,10 @@ public class PackageApi {
     private PackageCommandService packageCommandService;
 
     @PostMapping
-    public ResponseEntity<?> createPackage(TransPackageData tpd){
+    public ResponseEntity<?> createPackage(@RequestBody PackageCommandItem pci){
         HttpStatus status;
         try{
-            packageCommandService.create(new Package(tpd.getName(), tpd.getVersion(), tpd.getCategory(), tpd.getFiletype(), tpd.getSupsList()), tpd.getFilename());
+            packageCommandService.create(pci);
             status = HttpStatus.OK;
         }catch (Exception e){
             status = HttpStatus.CONFLICT;
@@ -57,22 +60,5 @@ public class PackageApi {
     public ResponseEntity<?> findPackageByNameVersion(String name, String version){
         return ResponseEntity.of(packageCommandService.findByNameVersion(name, version));
     }
-
-}
-
-@Data
-class TransPackageData{
-
-    private String name;
-
-    private String version;
-
-    private String category;
-
-    private String filetype;
-
-    private List<String> supsList;
-
-    private String filename;
 
 }
