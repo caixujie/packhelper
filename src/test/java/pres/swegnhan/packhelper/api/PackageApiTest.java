@@ -18,11 +18,13 @@ import pres.swegnhan.packhelper.application.commandservice.PackageCommandService
 import pres.swegnhan.packhelper.core.Package;
 import pres.swegnhan.packhelper.core.PackageCommandItem;
 import pres.swegnhan.packhelper.core.SupportSystem;
+import pres.swegnhan.packhelper.infrastructure.commandrepository.PackageRepository;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -45,6 +47,9 @@ public class PackageApiTest {
     @MockBean
     private PackageCommandService packageCommandService;
 
+    @MockBean
+    private PackageRepository packageRepository;
+
     private PackageCommandItem pci;
 
     @Before
@@ -60,9 +65,7 @@ public class PackageApiTest {
     }
 
     @Test
-    @Rollback
     public void should_create_package_success() throws Exception{
-        FileUtils.copyFileToDirectory(new File("src/test/resources/" + pci.getPackFileName()), new File(TEMP_DIR_PATH));
         RestAssuredMockMvc.given().contentType("application/json").body(new HashMap<String, Object>(){
             {
                 {
@@ -75,14 +78,11 @@ public class PackageApiTest {
                 }
             }
         }).when().post("/package").then().statusCode(200);
-        Package packMirror = packageCommandService.findByNameVersion(pci.getName(), pci.getVersion()).get();
-        assertThat(pci.getName(), equalTo(packMirror.getName()));
-        assertThat(pci.getVersion(), equalTo(packMirror.getVersion()));
-        assertThat(Integer.valueOf(pci.getCategory()), equalTo(packMirror.getCategory()));
-        assertThat(pci.getFiletype(), equalTo(packMirror.getFiletype()));
-        assertThat(Arrays.asList(pci.getSupsList()), equalTo(packMirror.getSupsList()));
-        assertThat(new File(PACK_HUB_PATH + '/' + pci.getPackFileName()).exists(), is(true));
-        FileUtils.deleteQuietly(new File(PACK_HUB_PATH + '/' + pci.getPackFileName()));
+    }
+
+    @Test
+    public void should_remove_package_success() throws Exception{
+        RestAssuredMockMvc.given().param("packUid", UUID.randomUUID().toString());
     }
 
 }
