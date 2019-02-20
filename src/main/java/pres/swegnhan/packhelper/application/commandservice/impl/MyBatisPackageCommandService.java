@@ -10,6 +10,7 @@ import pres.swegnhan.packhelper.core.Package;
 import pres.swegnhan.packhelper.core.PackageCommandItem;
 import pres.swegnhan.packhelper.core.SupportSystem;
 import pres.swegnhan.packhelper.infrastructure.commandrepository.PackageRepository;
+import pres.swegnhan.packhelper.infrastructure.commandrepository.SupportSystemRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class MyBatisPackageCommandService implements PackageCommandService {
         pack.setUrl(PACK_HUB_PATH + '/' + pci.getPackFileName());
         packageRepository.insert(pack);
         for(SupportSystem sups : pack.getSupsList()) {
-            if(packageRepository.findSupportSystem(sups))
+            if(packageRepository.hasSupportSystem(sups))
                 packageRepository.insertPackSupsRelation(pack.getUid(), sups.getUid());
         }
         try {

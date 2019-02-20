@@ -17,14 +17,14 @@ public interface PackageRepository {
 
     Package findByNameVersion(@Param("name") String name, @Param("version") String version);
 
-    boolean findSupportSystem(@Param("sups") SupportSystem sups);
-
-    void insertSupportSystem(@Param("sups") SupportSystem sups);
-
-    void insertPackSupsRelation(@Param("packId") String packId, @Param("supsId") String supsId);
-
     void update(@Param("pack") Package pack);
 
     void delete(@Param("uid") String uid);
+
+    boolean hasSupportSystem(@Param("sups") SupportSystem sups);
+
+    void insertPackSupsRelation(@Param("packId") String packId, @Param("supsId") String supsId);
+
+    void deletePackSupsRelation(@Param("packId") String packId, @Param("supsId") String supsId);
 
 }

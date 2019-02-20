@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.joda.time.DateTime;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,11 +27,19 @@ public class Package {
 
     private int category;
 
+    private String description;
+
     private String url;
 
     private String filetype;
 
     private List<SupportSystem> supsList;
+
+    private DateTime createdAt;
+
+    private DateTime updatedAt;
+
+    private int downloads;
 
     public Package(String name, String version, String category, String filetype ,String[] supsList){
         this.uid = UUID.randomUUID().toString();
@@ -58,6 +67,10 @@ public class Package {
         this.url = url;
         this.filetype = filetype;
         this.supsList = Arrays.stream(supsList).collect(toSet()).stream().map(SupportSystem::new).collect(toList());
+    }
+
+    public static void main(String[] args) {
+        System.out.println(UUID.randomUUID().toString());
     }
 
 }

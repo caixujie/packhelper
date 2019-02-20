@@ -9,10 +9,9 @@ import java.util.UUID;
 
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode
 public class SupportSystem {
 
-    @EqualsAndHashCode.Exclude
+    @EqualsAndHashCode.Include
     private String uid;
 
     private String name;

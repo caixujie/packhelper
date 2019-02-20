@@ -6,17 +6,22 @@ CREATE TABLE `tb_category` (
 
 CREATE TABLE `tb_package` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` varchar(255) NOT NULL UNIQUE,
+  `uid` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `version` varchar(255) NOT NULL,
   `category` int(11) DEFAULT NULL,
+  `description` varchar(1023) NOT NULL,
   `url` varchar(255) DEFAULT NULL,
   `filetype` enum('.deb','.rpm') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `downloads` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uid` (`uid`),
   UNIQUE KEY `name` (`name`,`version`),
   KEY `category` (`category`),
   CONSTRAINT `tb_packlist_ibfk_1` FOREIGN KEY (`category`) REFERENCES `tb_category` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
 
 
 CREATE TABLE `tb_support_system` (

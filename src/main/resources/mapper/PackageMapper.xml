@@ -4,22 +4,18 @@
 <mapper namespace="pres.swegnhan.packhelper.infrastructure.commandrepository.PackageRepository">
 
     <insert id="insert">
-        insert into tb_package(uid, name, version, category, url, filetype)
+        insert into tb_package(uid, name, version, category, description, url, filetype, created_at, updated_at, downloads)
         values (
             #{pack.uid},
             #{pack.name},
             #{pack.version},
             #{pack.category},
+            #{pack.description},
             #{pack.url},
-            #{pack.filetype})
-    </insert>
-
-    <insert id="insertSupportSystem">
-        insert into tb_support_system(uid, name, version)
-        values (
-        #{sups.uid},
-        #{sups.name},
-        #{sups.version})
+            #{pack.filetype},
+            now(),
+            now(),
+            0)
     </insert>
 
     <insert id="insertPackSupsRelation">
@@ -29,14 +25,21 @@
         #{supsId})
     </insert>
 
+    <delete id="deletePackSupsRelation">
+        delete from rel_pack_sups
+        where pack_uid = #{packId} and sups_uid = #{supsId}
+    </delete>
+
     <update id="update">
         update tb_package
         <set>
             <if test="pack.name != ''">name = #{pack.name},</if>
             <if test="pack.version != ''">version = #{pack.version},</if>
             <if test="pack.category != 0">category = #{pack.category},</if>
+            <if test="pack.description != ''">description = #{pack.description},</if>
             <if test="pack.url != ''">url = #{pack.url},</if>
-            <if test="pack.filetype != ''">filetype = #{pack.filetype}</if>
+            <if test="pack.filetype != ''">filetype = #{pack.filetype},</if>
+            updated_at = now()
         </set>
         where uid = #{pack.uid}
     </update>
@@ -51,8 +54,12 @@
             P.name packName,
             P.version packVersion,
             P.category packCategory,
+            P.description packDescription,
             P.url packUrl,
             P.filetype packFiletype,
+            P.created_at packCreatedAt,
+            P.updated_at packUpdatedAt,
+            P.downloads packDownloads,
             S.uid supsUid,
             S.name supsName,
             S.version supsVersion
@@ -71,7 +78,7 @@
         where P.name = #{name} and P.version = #{version}
     </select>
 
-    <select id="findSupportSystem" resultType="java.lang.Boolean">
+    <select id="hasSupportSystem" resultType="java.lang.Boolean">
         select count(*) from tb_support_system S
         where S.name = #{sups.name} and S.version = #{sups.version}
     </select>
@@ -81,8 +88,12 @@
         <result column="packName" property="name"/>
         <result column="packVersion" property="version"/>
         <result column="packCategory" property="category"/>
+        <result column="packDescription" property="description"/>
         <result column="packUrl" property="url"/>
         <result column="packFiletype" property="filetype"/>
+        <result column="packCreatedAt" property="createdAt"/>
+        <result column="packUpdatedAt" property="updatedAt"/>
+        <result column="packDownloads" property="downloads"/>
         <collection property="supsList" ofType="arraylist" resultMap="supportsystems"/>
     </resultMap>
 

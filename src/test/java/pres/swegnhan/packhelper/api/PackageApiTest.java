@@ -82,7 +82,8 @@ public class PackageApiTest {
 
     @Test
     public void should_remove_package_success() throws Exception{
-        RestAssuredMockMvc.given().param("packUid", UUID.randomUUID().toString());
+        RestAssuredMockMvc.given().param("packUid", UUID.randomUUID().toString()).
+        when().delete("/package").then().statusCode(200);
     }
 
 }
