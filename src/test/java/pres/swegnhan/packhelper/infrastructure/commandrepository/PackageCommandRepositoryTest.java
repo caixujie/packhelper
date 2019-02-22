@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.test.context.junit4.SpringRunner;
 import pres.swegnhan.packhelper.core.Package;
 import pres.swegnhan.packhelper.core.SupportSystem;
-import pres.swegnhan.packhelper.infrastructure.commandrepository.PackageRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,10 +22,10 @@ import static org.hamcrest.core.IsEqual.equalTo;
 @MybatisTest
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE )
-public class PackageRepositoryTest {
+public class PackageCommandRepositoryTest {
 
     @Autowired
-    private PackageRepository packageRepository;
+    private PackageCommandRepository packageRepository;
 
     private Package pack1, pack2;
 

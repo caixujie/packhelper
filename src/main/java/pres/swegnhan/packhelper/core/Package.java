@@ -69,8 +69,4 @@ public class Package {
         this.supsList = Arrays.stream(supsList).collect(toSet()).stream().map(SupportSystem::new).collect(toList());
     }
 
-    public static void main(String[] args) {
-        System.out.println(UUID.randomUUID().toString());
-    }
-
 }

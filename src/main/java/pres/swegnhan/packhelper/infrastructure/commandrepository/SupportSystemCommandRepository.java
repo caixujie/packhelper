@@ -7,7 +7,7 @@ import pres.swegnhan.packhelper.core.SupportSystem;
 
 @Mapper
 @Repository
-public interface SupportSystemRepository {
+public interface SupportSystemCommandRepository {
 
     void insert(@Param("sups") SupportSystem sups);
 

@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 @Repository
-public interface PackageRepository {
+public interface PackageCommandRepository {
 
     void insert(@Param("pack") Package pack);
 
