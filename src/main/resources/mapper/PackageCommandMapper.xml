@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pres.swegnhan.packhelper.infrastructure.commandrepository.PackageCommandRepository">
+
+    <insert id="insert">
+        insert into tb_package(uid, name, version, category, description, url, filetype, created_at, updated_at, downloads)
+        values (
+            #{pack.uid},
+            #{pack.name},
+            #{pack.version},
+            #{pack.category},
+            #{pack.description},
+            #{pack.url},
+            #{pack.filetype},
+            now(),
+            now(),
+            0)
+    </insert>
+
+    <insert id="insertPackSupsRelation">
+        insert into rel_pack_sups(pack_uid, sups_uid)
+        values (
+        #{packId},
+        #{supsId})
+    </insert>
+
+    <delete id="deletePackSupsRelation">
+        delete from rel_pack_sups
+        where pack_uid = #{packId} and sups_uid = #{supsId}
+    </delete>
+
+    <update id="update">
+        update tb_package
+        <set>
+            <if test="pack.name != ''">name = #{pack.name},</if>
+            <if test="pack.version != ''">version = #{pack.version},</if>
+            <if test="pack.category != 0">category = #{pack.category},</if>
+            <if test="pack.description != ''">description = #{pack.description},</if>
+            <if test="pack.url != ''">url = #{pack.url},</if>
+            <if test="pack.filetype != ''">filetype = #{pack.filetype},</if>
+            updated_at = now()
+        </set>
+        where uid = #{pack.uid}
+    </update>
+
+    <delete id="delete">
+        delete from tb_package where uid = #{uid}
+    </delete>
+
+    <sql id="selectPackage">
+        select
+            P.uid packUid,
+            P.name packName,
+            P.version packVersion,
+            P.category packCategory,
+            P.description packDescription,
+            P.url packUrl,
+            P.filetype packFiletype,
+            P.created_at packCreatedAt,
+            P.updated_at packUpdatedAt,
+            P.downloads packDownloads,
+            S.uid supsUid,
+            S.name supsName,
+            S.version supsVersion
+        from tb_package P
+        left join rel_pack_sups PS on P.uid = PS.pack_uid
+        left join tb_support_system S on S.uid = PS.sups_uid
+    </sql>
+
+    <select id="findByUid" resultMap="packages">
+        <include refid="selectPackage"/>
+        where P.uid = #{uid}
+    </select>
+
+    <select id="findByNameVersion" resultMap="packages">
+        <include refid="selectPackage"/>
+        where P.name = #{name} and P.version = #{version}
+    </select>
+
+    <select id="hasSupportSystem" resultType="java.lang.Boolean">
+        select count(*) from tb_support_system S
+        where S.name = #{sups.name} and S.version = #{sups.version}
+    </select>
+
+    <resultMap id="packages" type="pres.swegnhan.packhelper.core.Package">
+        <id column="packUid" property="uid"/>
+        <result column="packName" property="name"/>
+        <result column="packVersion" property="version"/>
+        <result column="packCategory" property="category"/>
+        <result column="packDescription" property="description"/>
+        <result column="packUrl" property="url"/>
+        <result column="packFiletype" property="filetype"/>
+        <result column="packCreatedAt" property="createdAt"/>
+        <result column="packUpdatedAt" property="updatedAt"/>
+        <result column="packDownloads" property="downloads"/>
+        <collection property="supsList" ofType="arraylist" resultMap="supportsystems"/>
+    </resultMap>
+
+    <resultMap id="supportsystems" type="pres.swegnhan.packhelper.core.SupportSystem">
+        <id column="supsUid" property="uid" />
+        <result column="supsName" property="name"/>
+        <result column="supsVersion" property="version"/>
+    </resultMap>
+
+</mapper>

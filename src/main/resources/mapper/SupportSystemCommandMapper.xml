@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pres.swegnhan.packhelper.infrastructure.commandrepository.SupportSystemCommandRepository">
+
+    <insert id="insert">
+        insert into tb_support_system(uid, name, version)
+        values (
+          #{sups.uid},
+          #{sups.name},
+          #{sups.version})
+    </insert>
+
+    <select id="findByUid" resultMap="supportsystems">
+        select
+          uid supsUid,
+          name supsName,
+          version supsVersion
+        from tb_support_system
+        where uid = #{uid}
+    </select>
+
+    <select id="findByNameVersion" resultMap="supportsystems">
+        select
+          uid supsUid,
+          name supsName,
+          version supsVersion
+        from tb_support_system
+        where name = #{name} and version = #{version}
+    </select>
+
+    <delete id="delete">
+        delete from tb_support_system where uid = #{uid}
+    </delete>
+
+    <resultMap id="supportsystems" type="pres.swegnhan.packhelper.core.SupportSystem">
+        <id column="supsUid" property="uid" />
+        <result column="supsName" property="name"/>
+        <result column="supsVersion" property="version"/>
+    </resultMap>
+
+</mapper>

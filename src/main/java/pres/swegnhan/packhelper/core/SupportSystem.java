@@ -9,18 +9,22 @@ import java.util.UUID;
 
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode
 public class SupportSystem {
 
-    @EqualsAndHashCode.Exclude
+    @EqualsAndHashCode.Include
     private String uid;
 
     private String name;
 
     private String version;
 
+    public SupportSystem(String uid, String name, String version){
+        this.uid = uid;
+        this.name = name;
+        this.version = version;
+    }
+
     public SupportSystem(String input){
-        this.uid = UUID.randomUUID().toString();
         this.name = input.substring(0, input.indexOf('|'));
         this.version = input.substring(input.indexOf('|') + 1);
     }
@@ -30,5 +34,4 @@ public class SupportSystem {
         this.name = name;
         this.version = version;
     }
-
 }

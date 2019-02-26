@@ -24,7 +24,7 @@ public class CommentRepositoryTest {
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
-    private  PackageRepository packageRepository;
+    private  PackageCommandRepository packageCommandRepository;
 
     private Comment comment;
 
@@ -54,7 +54,7 @@ public class CommentRepositoryTest {
 
         comment.setPackUid(pack.getUid());
 
-        packageRepository.insert(pack);
+        packageCommandRepository.insert(pack);
 
     }
 
