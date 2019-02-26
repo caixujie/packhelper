@@ -7,14 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pres.swegnhan.packhelper.application.commandservice.PackageCommandService;
 import pres.swegnhan.packhelper.core.Package;
+import pres.swegnhan.packhelper.core.PackageCommandItem;
 import pres.swegnhan.packhelper.core.SupportSystem;
-import pres.swegnhan.packhelper.infrastructure.commandrepository.PackageRepository;
+import pres.swegnhan.packhelper.infrastructure.CategoryDictionary;
+import pres.swegnhan.packhelper.infrastructure.commandrepository.PackageCommandRepository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.UUID;
 
 @Service
 public class MyBatisPackageCommandService implements PackageCommandService {
@@ -25,29 +27,37 @@ public class MyBatisPackageCommandService implements PackageCommandService {
     @Value("${pres.swegnhan.packhelper.tempdirpath}")
     private String TEMP_DIR_PATH;
 
-//    @Value("${pres.swegnhan.packhelper.debunzipshellpath}")
-//    private String DEB_UNZIP_SHELL_PATH;
+    @Autowired
+    private PackageCommandRepository packageRepository;
 
     @Autowired
-    public PackageRepository packageRepository;
+    private CategoryDictionary categoryDictionary;
 
     @Override
     @Transactional
-    public void create(Package pack, String tempFileName) throws RuntimeException {
+    public void create(PackageCommandItem pci) throws RuntimeException {
+        Package pack = new Package();
+        pack.setUid(UUID.randomUUID().toString());
+        pack.setName(pci.getName());
+        pack.setVersion(pci.getVersion());
+        pack.setCategory(categoryDictionary.name2id(pci.getCategory()));
+        pack.setDescription(pci.getDescription());
+        pack.setSupsList(Arrays.asList(pci.getSupsList()));
+        pack.setFiletype(pci.getFiletype());
         if(packageRepository.findByNameVersion(pack.getName(), pack.getVersion()) != null)
             throw new RuntimeException();
-        pack.setUrl(PACK_HUB_PATH + '/' + tempFileName);
+        pack.setUrl(PACK_HUB_PATH + '/' + pci.getPackFileName());
         packageRepository.insert(pack);
         for(SupportSystem sups : pack.getSupsList()) {
-            if(packageRepository.findSupportSystem(sups))
+            if(packageRepository.hasSupportSystem(sups))
                 packageRepository.insertPackSupsRelation(pack.getUid(), sups.getUid());
         }
         try {
-            FileUtils.copyFileToDirectory(new File(TEMP_DIR_PATH + '/' + tempFileName), new File(PACK_HUB_PATH));
+            FileUtils.copyFileToDirectory(new File(TEMP_DIR_PATH + '/' + pci.getPackFileName()), new File(PACK_HUB_PATH));
         } catch (IOException e) {
             throw new RuntimeException();
         }
-        FileUtils.deleteQuietly(new File(TEMP_DIR_PATH + '/' + tempFileName));
+        FileUtils.deleteQuietly(new File(TEMP_DIR_PATH + '/' + pci.getPackFileName()));
     }
 
     @Override
