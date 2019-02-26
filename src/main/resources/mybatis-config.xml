@@ -18,8 +18,7 @@
     </settings>
 
     <typeHandlers>
-        <typeHandler handler="pres.swegnhan.packhelper.infrastructure.DateTimeHandler"
-                     javaType="org.joda.time.DateTime"/>
+        <typeHandler handler="pres.swegnhan.packhelper.infrastructure.DateTimeHandler" javaType="org.joda.time.DateTime"/>
     </typeHandlers>
 
     <!-- Continue going here -->
