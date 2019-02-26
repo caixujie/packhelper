@@ -18,6 +18,12 @@ public class SupportSystem {
 
     private String version;
 
+    public SupportSystem(String uid, String name, String version){
+        this.uid = uid;
+        this.name = name;
+        this.version = version;
+    }
+
     public SupportSystem(String input){
         this.name = input.substring(0, input.indexOf('|'));
         this.version = input.substring(input.indexOf('|') + 1);

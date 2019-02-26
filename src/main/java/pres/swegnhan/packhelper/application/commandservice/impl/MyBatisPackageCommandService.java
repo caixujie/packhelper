@@ -14,7 +14,9 @@ import pres.swegnhan.packhelper.infrastructure.commandrepository.PackageCommandR
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class MyBatisPackageCommandService implements PackageCommandService {
@@ -35,9 +37,13 @@ public class MyBatisPackageCommandService implements PackageCommandService {
     @Transactional
     public void create(PackageCommandItem pci) throws RuntimeException {
         Package pack = new Package();
+        pack.setUid(UUID.randomUUID().toString());
         pack.setName(pci.getName());
         pack.setVersion(pci.getVersion());
         pack.setCategory(categoryDictionary.name2id(pci.getCategory()));
+        pack.setDescription(pci.getDescription());
+        pack.setSupsList(Arrays.asList(pci.getSupsList()));
+        pack.setFiletype(pci.getFiletype());
         if(packageRepository.findByNameVersion(pack.getName(), pack.getVersion()) != null)
             throw new RuntimeException();
         pack.setUrl(PACK_HUB_PATH + '/' + pci.getPackFileName());
