@@ -42,18 +42,18 @@ public class PackageApiTest {
         );
     }
 
-    @Test
-    @Rollback
-    @Transactional
-    public void should_create_package_success() throws Exception{
-        RestAssuredMockMvc.given().
-                param("name", pack.getName()).
-                param("version", pack.getVersion()).
-                param("category", pack.getCategory()).
-                param("filetype", pack.getFiletype()).
-                param("supsList", pack.getSupsList()).
-                when().post("/package").
-                then().statusCode(200).body("content", equalTo(nullValue()));
-    }
+//    @Test
+//    @Rollback
+//    @Transactional
+//    public void should_create_package_success() throws Exception{
+//        RestAssuredMockMvc.given().
+//                param("name", pack.getName()).
+//                param("version", pack.getVersion()).
+//                param("category", pack.getCategory()).
+//                param("filetype", pack.getFiletype()).
+//                param("supsList", pack.getSupsList()).
+//                when().post("/package").
+//                then().statusCode(200).body("content", equalTo(nullValue()));
+//    }
 
 }
