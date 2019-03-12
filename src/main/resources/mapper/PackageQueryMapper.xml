@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pres.swegnhan.packhelper.infrastructure.queryrepository.PackageQueryRepository">
+
+    <select id="getCount"
+            parameterType="pres.swegnhan.packhelper.core.Page"
+            resultType="java.lang.Integer">
+        select
+        count(id)
+        from tb_package
+        where name like #{roleKeyword}
+    </select>
+    <select id="getPackage"
+            parameterType="pres.swegnhan.packhelper.core.Page"
+            resultType="pres.swegnhan.packhelper.core.Package">
+        select
+        id,
+        name
+        from tb_package
+        where name like #{roleKeyword}
+        limit #{begin},#{pageSize}
+    </select>
+    <!--<insert id="addPackage" parameterType="pres/swegnhan/packhelper/core/Package.java">-->
+        <!--insert into t_role-->
+        <!--(role_id,role_name)-->
+        <!--values-->
+        <!--(#{id,jdbcType=CHAR},#{name,jdbcType=VARCHAR})-->
+    <!--</insert>-->
+    <!--<delete id="deletePackage" parameterType="java.lang.String">-->
+        <!--delete from t_role-->
+        <!--where role_id=#{id}-->
+    <!--</delete>-->
+    <!--<update id="updatePackage" parameterType="pres/swegnhan/packhelper/core/Package.java">-->
+        <!--update t_role-->
+        <!--set-->
+        <!--role_name=#{name,jdbcType=VARCHAR}-->
+        <!--where-->
+        <!--role_id=#{id,jdbcType=CHAR}-->
+    <!--</update>-->
+    <!--&lt;!&ndash; 查询所有角色 &ndash;&gt;-->
+    <!--<select id="findAllRoleName"-->
+            <!--resultType="pres/swegnhan/packhelper/core/Package.java">-->
+        <!--select-->
+        <!--role_id id,-->
+        <!--role_name name-->
+        <!--from-->
+        <!--t_role-->
+    <!--</select>-->
+
+</mapper>
