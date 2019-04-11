@@ -47,7 +47,7 @@ public class MyBatisPackageQueryService implements PackageQueryService {
             result.setStatus(1);
             result.setMessage("没有角色信息");
         }
-
+        System.out.println(result);
         return result;
         }
 }

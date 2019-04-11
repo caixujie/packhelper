@@ -53,10 +53,10 @@ function register_nav() {
 		//更换正文
 		var target = $(this).children("a").attr("name");
 		$('#main').load(target);
-		alert(target);
+//		alert(target);
 		//为正文页面远程加载js
 		load_script($(this));
-		alert('1123');
+//		alert('1123');
 	});
 }
 
@@ -64,9 +64,9 @@ function register_nav() {
 function load_script($li) {
 	var target = $li.children("a").attr("name");
 	var name = target.substring(target.lastIndexOf("/")+1, target.lastIndexOf(".html"));
-	if("role"==name){
-		$.getScript("js/common/ajaxfileupload.js");
-	}
+//	if("role"==name){
+	$.getScript("js/common/ajaxfileupload.js");
+//	}
 	$.getScript("js/" + name + ".js");
     alert("js/" + name + ".js");
 }

@@ -13,14 +13,47 @@
     </select>
     <select id="getPackage"
             parameterType="pres.swegnhan.packhelper.core.Page"
-            resultType="pres.swegnhan.packhelper.core.Package">
+            resultMap="packages">
         select
-        id,
-        name
-        from tb_package
-        where name like #{roleKeyword}
+        P.uid packUid,
+        P.name packName,
+        P.version packVersion,
+        P.category packCategory,
+        P.description packDescription,
+        P.url packUrl,
+        P.filetype packFiletype,
+        P.created_at packCreatedAt,
+        P.updated_at packUpdatedAt,
+        P.downloads packDownloads,
+        S.uid supsUid,
+        S.name supsName,
+        S.version supsVersion
+        from tb_package P
+        left join rel_pack_sups PS on P.uid = PS.pack_uid
+        left join tb_support_system S on S.uid = PS.sups_uid
+        where P.name like #{roleKeyword}
         limit #{begin},#{pageSize}
     </select>
+
+    <resultMap id="packages" type="pres.swegnhan.packhelper.core.Package">
+        <id column="packUid" property="uid"/>
+        <result column="packName" property="name"/>
+        <result column="packVersion" property="version"/>
+        <result column="packCategory" property="category"/>
+        <result column="packDescription" property="description"/>
+        <result column="packUrl" property="url"/>
+        <result column="packFiletype" property="filetype"/>
+        <result column="packCreatedAt" property="createdAt"/>
+        <result column="packUpdatedAt" property="updatedAt"/>
+        <result column="packDownloads" property="downloads"/>
+        <collection property="supsList" ofType="arraylist" resultMap="supportsystems"/>
+    </resultMap>
+
+    <resultMap id="supportsystems" type="pres.swegnhan.packhelper.core.SupportSystem">
+        <id column="supsUid" property="uid" />
+        <result column="supsName" property="name"/>
+        <result column="supsVersion" property="version"/>
+    </resultMap>
     <!--<insert id="addPackage" parameterType="pres/swegnhan/packhelper/core/Package.java">-->
         <!--insert into t_role-->
         <!--(role_id,role_name)-->
@@ -47,5 +80,4 @@
         <!--from-->
         <!--t_role-->
     <!--</select>-->
-
 </mapper>

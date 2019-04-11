@@ -28,30 +28,51 @@
           </div>
         </div>
 
-        <table id="role_table" class="table table-striped">
+        <table id="role_table" class="table table-striped" style="table-layout:fixed">
           <thead>
             <tr>
               <th class="col-md-1">id</th>
               <th class="col-md-2">名称</th>
-              <th class="col-md-2">版本</th>
+              <th class="col-md-1">版本</th>
               <th class="col-md-1">分类</th>
               <th class="col-md-2">操作系统</th>
-              <th class="col-md-2">文件类型</th>
+              <th class="col-md-1">文件类型</th>
               <th class="col-md-2">描述</th>
+              <th class="col-md-2"></th>
             </tr>
           </thead>
           <tbody>
-            <!--<tr>-->
-              <!--<td>1</td>-->
-              <!--<td>1</td>-->
-              <!--<td>超级管理员</td>-->
-              <!--<td>-->
-              <!--</td>-->
-            <!--</tr>-->
+            <tr>
+              <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" data-target="tooltip" title="a1d88df3-d038-40d4-b370-cdeb7fe7620f">a1d88df3-d038-40d4-b370-cdeb7fe7620f</td>
+              <td>apache2</td>
+              <td>2.4.29-1ubuntu4.5</td>
+              <td>2</td>
+              <td>ttttttttttttttttttttttttttyt</td>
+              <td>.deb</td>
+              <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Apache HTTP Server
+                The Apache HTTP Server Project's goal is to build a secure, efficient and
+                extensible HTTP server as standards-compliant open source software. The
+                result has long been the number one web server on the Internet.
+                .
+                Installing this package results in a full installation, including the
+                configuration files, init scripts and support scripts.</td>
+              <td>
+                <a href="" data-toggle="modal" data-target="#editRole" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑</a>
+                <a href="" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除</a>
+              </td>
+            </tr>
             <!--<tr>-->
               <!--<td>2</td>-->
               <!--<td>2</td>-->
               <!--<td>讲师</td>-->
+              <!--<td>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
               <!--<td>-->
               <!--</td>-->
             <!--</tr>-->
@@ -61,11 +82,27 @@
               <!--<td>学员</td>-->
               <!--<td>-->
               <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
             <!--</tr>-->
             <!--<tr>-->
               <!--<td>4</td>-->
               <!--<td>00000011-4455-6677-8899-AABBCCDDEEFF</td>-->
               <!--<td>评论管理员</td>-->
+              <!--<td>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
               <!--<td>-->
                 <!--<a href="" data-toggle="modal" data-target="#editRole" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑</a>-->
                 <!--<a href="" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除</a>-->
@@ -75,6 +112,14 @@
               <!--<td>5</td>-->
               <!--<td>00000011-4455-6677-8899-AABBCCDDEEFF</td>-->
               <!--<td>活动管理员</td>-->
+              <!--<td>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--</td>-->
               <!--<td>-->
                 <!--<a href="" data-toggle="modal" data-target="#editRole" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑</a>-->
                 <!--<a href="" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除</a>-->
@@ -109,28 +154,28 @@
   </div>
 
   <!-- 新增角色 -->
-  <div role="tabpanel" class="tab-pane" id="addPanel">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <form class="form-horizontal" action="" method="post">
-          <!-- inputs -->
-          <div class="form-group">
-            <label class="col-md-3 control-label" for="roleName">角色名称:</label>
-            <div class="col-md-8">
-              <input type="text" id="roleName"  class="form-control">
-            </div>
-          </div>
-          <!-- buttons -->
-          <div class="form-group">
-            <div class="col-md-8 col-md-offset-3">
-              <button type="submit" class="btn btn-primary">确  认</button>
-            <button type="reset" class="btn btn-primary">重  置</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+  <!--<div role="tabpanel" class="tab-pane" id="addPanel">-->
+    <!--<div class="panel panel-default">-->
+      <!--<div class="panel-body">-->
+        <!--<form class="form-horizontal" action="" method="post">-->
+          <!--&lt;!&ndash; inputs &ndash;&gt;-->
+          <!--<div class="form-group">-->
+            <!--<label class="col-md-3 control-label" for="roleName">角色名称:</label>-->
+            <!--<div class="col-md-8">-->
+              <!--<input type="text" id="roleName"  class="form-control">-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--&lt;!&ndash; buttons &ndash;&gt;-->
+          <!--<div class="form-group">-->
+            <!--<div class="col-md-8 col-md-offset-3">-->
+              <!--<button type="submit" class="btn btn-primary">确  认</button>-->
+            <!--<button type="reset" class="btn btn-primary">重  置</button>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</form>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
 
 
 
@@ -138,8 +183,8 @@
   <div role="tabpanel" class="tab-pane" id="addUserPanel">
     <div class="panel panel-default">
       <div class="panel-body">
-        <form class="form-horizontal" action="" method="post">
-          <div class="form-group">
+        <form class="form-horizontal" action="" method="post" name="caixj">
+          <div class="form-group" id="fileUpload">
             <label class="col-md-2 control-label" for="addHeadPicture">新增文件:</label>
             <div class="col-md-8">
               <input type="file" id="addHeadPicture" name="addPicture">
@@ -147,30 +192,45 @@
           </div>
 
           <div class="form-group">
-            <label class="col-md-2 control-label" for="inputEmail">名称:</label>
+            <label class="col-md-2 control-label" for="caonima">名称:</label>
             <div class="col-md-8">
-              <input type="text" id="inputEmail" class="form-control">
+              <input type="text" id="caonima" class="form-control" name="name" />
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-md-2 control-label" for="inputPassword">版本:</label>
+            <label class="col-md-2 control-label" for="vers">版本:</label>
             <div class="col-md-8">
-              <input type="text" id="inputPassword" class="form-control">
+              <input type="text" id="vers" class="form-control" name="version"/>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-md-2 control-label" for="inputPassword2">操作系统:</label>
+            <label class="col-md-2 control-label" for="supsList">操作系统:</label>
+            <div class="col-md-8 checkbox">
+              <label></label><input type="checkbox" id="supsList"  name="supsList" value="{&quot;uid&quot;:&quot;04e4bfeb-a9b4-4be1-a65c-a2176fd186c3&quot;,&quot;name&quot;:&quot;ubuntu&quot;,&quot;version&quot;:&quot;14.04&quot;}">ubuntu14.04</label>
+              <label></label><input type="checkbox" id="supsList1"  name="supsList" value="{&quot;uid&quot;:&quot;ee3f4052-3cba-41dd-8bf4-2cf917dbdb62&quot;,&quot;name&quot;:&quot;ubuntu&quot;,&quot;version&quot;:&quot;16.04&quot;}">ubuntu16.04</label>
+            </div>
+          </div>
+
+          <!--<div class="form-group">-->
+            <!--<label class="col-md-2 control-label" for="supsList">操作系统:</label>-->
+            <!--<div class="col-md-8">-->
+              <!--<input type="text" id="supsList" class="form-control" name="supsList">-->
+            <!--</div>-->
+          <!--</div>-->
+
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="packFileName">文件名:</label>
             <div class="col-md-8">
-              <input type="text" id="inputPassword2" class="form-control">
+              <input type="text" id="packFileName" class="form-control" name="packFileName" />
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-md-2 control-label" for="nickName">描述:</label>
+            <label class="col-md-2 control-label" for="desc">描述:</label>
             <div class="col-md-8">
-              <input type="text" id="nickName" class="form-control">
+              <input type="text" id="desc" class="form-control" name="description"/>
             </div>
           </div>
 
@@ -184,11 +244,16 @@
           <div class="form-group">
             <label for="roleCategory" class="col-md-2 control-label">分类:</label>
             <div class="col-md-8">
-              <select id="roleCategory" class="form-control">
+              <select id="roleCategory" class="form-control" name="category">
                 <option></option>
-                <option>1类型</option>
-                <option>2类型</option>
-                <option>3类型</option>
+                <option>office</option>
+                <option>Development</option>
+                <option>Utility</option>
+                <option>Network</option>
+                <option>Education</option>
+                <option>Graphics</option>
+                <option>AudioVideo</option>
+                <option>Game</option>
               </select>
             </div>
           </div>
@@ -234,7 +299,7 @@
                   确认删除该记录？
       </div>
       <div class="modal-footer">
-        <button id="deleterole_button" type="button" class="btn btn-primary">确  认</button>
+        <button id="deleterole_button" type="submit" class="btn btn-primary">确  认</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">取  消</button>
       </div>
     </div>

@@ -22,12 +22,16 @@ public class PackageApi {
 
     @PostMapping
     public ResponseEntity<?> createPackage(@RequestBody PackageCommandItem pci){
+
         HttpStatus status;
         try{
+            System.out.println("?????????????????"+pci);
             packageCommandService.create(pci);
             status = HttpStatus.OK;
         }catch (Exception e){
             status = HttpStatus.CONFLICT;
+
+
         }
         return new ResponseEntity<>(null, status);
     }

@@ -43,7 +43,8 @@ public class MyBatisPackageCommandService implements PackageCommandService {
         pack.setCategory(categoryDictionary.name2id(pci.getCategory()));
         pack.setDescription(pci.getDescription());
         pack.setSupsList(Arrays.asList(pci.getSupsList()));
-        pack.setFiletype(pci.getFiletype());
+        pack.setFiletype(pci.getPackFileName().substring(pci.getPackFileName().length() - 4));
+        System.out.println(pack);
         if(packageRepository.findByNameVersion(pack.getName(), pack.getVersion()) != null)
             throw new RuntimeException();
         pack.setUrl(PACK_HUB_PATH + '/' + pci.getPackFileName());

@@ -119,13 +119,19 @@ jQuery.extend({
         jQuery('#' + frameId).load(uploadCallback); //ajax 请求从服务器加载数据，同时传入回调函数
         return { abort: function () { } };
     },
-    uploadHttpData: function (r, type) {        var data = !type;
-        data = type == "xml" || data ? r.responseXML : r.responseText;        // If the type is "script", eval it in global context
-        if (type == "script")
-            jQuery.globalEval(data);        // Get the JavaScript object, if JSON is used.
-        if (type == "json")
-            eval("data = " + data);        // evaluate scripts within html
-        if (type == "html")
-            jQuery("<div>").html(data).evalScripts();        return data;
+    uploadHttpData: function (r, type) {
+//        var data = !type;
+//        data = type == "xml" || data ? r.responseXML : r.responseText;        // If the type is "script", eval it in global context
+//        if (type == "script")
+//            jQuery.globalEval(data);        // Get the JavaScript object, if JSON is used.
+//        if (type == "json")
+//            eval("data = " + data);        // evaluate scripts within html
+//        if (type == "html")
+//            jQuery("<div>").html(data).evalScripts();        return data;
+            var data =r.responseText;
+                	var start = data.indexOf("{");
+                	var end = data.indexOf("}");
+                	var jsonStr = data.substring(start,end+1);
+                	return (jsonStr instanceof Object)?jsonStr:eval("(" + jsonStr + ")");
     }
 })
