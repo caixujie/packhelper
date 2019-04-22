@@ -13,12 +13,16 @@ public class PackageQueryApi {
     @Autowired
     private PackageQueryService packagequeryservice;
 
-    @GetMapping
+    @GetMapping(path = "/page")
     public Result queryPackages(Page page) {
         page.setRoleKeyword("undefined".equals(page.getRoleKeyword()) ? "%%" : "%"+page.getRoleKeyword()+"%");
         Result result=null;
 
         result=this.packagequeryservice.queryByPage(page);
         return result;
+    }
+    @GetMapping(path = "/all")
+    public ResponseEntity<?> queryPackages() {
+       return ResponseEntity.of(packagequeryservice.queryAll());
     }
 }

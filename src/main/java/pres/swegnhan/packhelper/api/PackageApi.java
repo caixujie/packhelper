@@ -36,8 +36,8 @@ public class PackageApi {
         return new ResponseEntity<>(null, status);
     }
     
-    @DeleteMapping
-    public ResponseEntity<?> removePackage(String packUid){
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity<?> removePackage(@PathVariable("id") String packUid){
         HttpStatus status;
         try{
             packageCommandService.remove(packUid);

@@ -35,6 +35,28 @@
         limit #{begin},#{pageSize}
     </select>
 
+    <select id="getPackageall"
+            resultMap="packages">
+        select
+        P.uid packUid,
+        P.name packName,
+        P.version packVersion,
+        P.category packCategory,
+        P.description packDescription,
+        P.url packUrl,
+        P.filetype packFiletype,
+        P.created_at packCreatedAt,
+        P.updated_at packUpdatedAt,
+        P.downloads packDownloads,
+        S.uid supsUid,
+        S.name supsName,
+        S.version supsVersion
+        from tb_package P
+        left join rel_pack_sups PS on P.uid = PS.pack_uid
+        left join tb_support_system S on S.uid = PS.sups_uid
+    </select>
+
+
     <resultMap id="packages" type="pres.swegnhan.packhelper.core.Package">
         <id column="packUid" property="uid"/>
         <result column="packName" property="name"/>

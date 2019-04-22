@@ -3,10 +3,14 @@ package pres.swegnhan.packhelper.application.commandservice.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pres.swegnhan.packhelper.application.commandservice.PackageQueryService;
+import pres.swegnhan.packhelper.core.Package;
 import pres.swegnhan.packhelper.core.Page;
 import pres.swegnhan.packhelper.core.Result;
 import pres.swegnhan.packhelper.infrastructure.queryrepository.PackageQueryRepository;
 import pres.swegnhan.packhelper.uitil.PageUtil;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MyBatisPackageQueryService implements PackageQueryService {
@@ -50,4 +54,9 @@ public class MyBatisPackageQueryService implements PackageQueryService {
         System.out.println(result);
         return result;
         }
+
+    @Override
+    public Optional<List<Package>> queryAll() {
+        return Optional.of(packageQueryRepository.getPackageall());
+    }
 }

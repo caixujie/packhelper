@@ -293,10 +293,10 @@
      <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">删除角色</h4>
+        <h4 class="modal-title" id="myModalLabel">删除软件包</h4>
       </div>
       <div class="modal-body">
-                  确认删除该记录？
+                  确认删除该软件包？
       </div>
       <div class="modal-footer">
         <button id="deleterole_button" type="submit" class="btn btn-primary">确  认</button>
@@ -311,16 +311,71 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header" align="center">
-        <h4 class="modal-title" id="myModalLabel001"><strong>编 辑 角 色</strong></h4>
+        <h4 class="modal-title" id="myModalLabel001"><strong>编 辑 软 件 包</strong></h4>
       </div>
       <div class="modal-body">
       <form class="form-horizontal" action="" method="post">
+          <!--<div class="form-group">-->
+          <!--<label class="col-md-3 control-label" for="updateRoleName">名称:</label>-->
+          <!--<div class="col-md-8">-->
+           <!--<input type="text" id="updateRoleName"  class="form-control">-->
+          <!--</div>-->
+          <!--</div>-->
         <div class="form-group">
-          <label class="col-md-3 control-label" for="updateRoleName">角色名称:</label>
+          <label class="col-md-2 control-label" for="caonimaM">名称:</label>
           <div class="col-md-8">
-           <input type="text" id="updateRoleName"  class="form-control">
+            <input type="text" id="caonimaM" class="form-control" name="name" />
           </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="versM">版本:</label>
+          <div class="col-md-8">
+            <input type="text" id="versM" class="form-control" name="version"/>
           </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="supsList">操作系统:</label>
+          <div class="col-md-8 checkbox">
+            <label></label><input type="checkbox" id="supsListM"  name="supsList" value="{&quot;uid&quot;:&quot;04e4bfeb-a9b4-4be1-a65c-a2176fd186c3&quot;,&quot;name&quot;:&quot;ubuntu&quot;,&quot;version&quot;:&quot;14.04&quot;}">ubuntu14.04</label>
+            <label></label><input type="checkbox" id="supsList1M"  name="supsList" value="{&quot;uid&quot;:&quot;ee3f4052-3cba-41dd-8bf4-2cf917dbdb62&quot;,&quot;name&quot;:&quot;ubuntu&quot;,&quot;version&quot;:&quot;16.04&quot;}">ubuntu16.04</label>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="packFileTypeM">文件类型:</label>
+          <div class="col-md-8">
+            <input type="text" id="packFileTypeM" class="form-control" name="packFileName" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="descM">描述:</label>
+          <div class="col-md-8">
+            <input type="text" id="descM" class="form-control" name="description"/>
+          </div>
+        </div>
+
+
+
+        <div class="form-group">
+          <label for="roleCategoryM" class="col-md-2 control-label">分类:</label>
+          <div class="col-md-8">
+            <select id="roleCategoryM" class="form-control" name="category">
+              <option></option>
+              <option>office</option>
+              <option>Development</option>
+              <option>Utility</option>
+              <option>Network</option>
+              <option>Education</option>
+              <option>Graphics</option>
+              <option>AudioVideo</option>
+              <option>Game</option>
+            </select>
+          </div>
+        </div>
           <div class="form-group">
             <div class="col-md-8 col-md-offset-3">
               <button type="submit" class="btn btn-primary">确  认</button>

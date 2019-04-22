@@ -13,6 +13,8 @@ public interface PackageQueryRepository {
     public int getCount(Page page);
     public List<Package> getPackage(Page page);
 
+    public List<Package> getPackageall();
+
     // 添加
 //    public int addPackage(Package pack);
 //
