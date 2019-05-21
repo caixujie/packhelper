@@ -55,3 +55,26 @@ CREATE TABLE `tb_comment` (
   KEY `pack_uid` (`pack_uid`),
   CONSTRAINT `tb_comment_ibfk_1` FOREIGN KEY (`pack_uid`) REFERENCES `tb_package` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `tb_user`(
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mac` varchar(17) NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `level1` varchar(255) NOT NULL,
+  `level2` varchar(255) NOT NULL,
+  `level3` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY (`mac`),
+)
+
+CREATE TABLE `rel_user_package`(
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pack_uid` varchar(255) NOT NULL,
+  `user_mac` varchar(17) NOT NULL,
+  `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uid` (`pack_uid`,`user_mac`),
+  FOREIGN KEY (`pack_uid`) REFERENCES `tb_package` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`user_mac`) REFERENCES `tb_user` (`mac`) ON DELETE CASCADE ON UPDATE CASCADE
+)

@@ -31,8 +31,12 @@
         from tb_package P
         left join rel_pack_sups PS on P.uid = PS.pack_uid
         left join tb_support_system S on S.uid = PS.sups_uid
-        where P.name like #{roleKeyword}
-        limit #{begin},#{pageSize}
+        where P.uid in( select temp.uid from(
+            select P.uid as uid
+            from tb_package P
+            where P.name like #{roleKeyword}
+            limit #{begin},#{pageSize}
+        ) as temp)
     </select>
 
     <select id="getPackageall"

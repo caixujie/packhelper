@@ -1,22 +1,26 @@
 package pres.swegnhan.packhelper.application.commandservice.impl;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.tomcat.util.buf.Utf8Encoder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pres.swegnhan.packhelper.application.commandservice.PackageUploadService;
+import org.springframework.transaction.annotation.Transactional;
+import pres.swegnhan.packhelper.application.commandservice.PackageUploadDownloadService;
 import pres.swegnhan.packhelper.core.Package;
-import pres.swegnhan.packhelper.core.SupportSystem;
+import pres.swegnhan.packhelper.infrastructure.commandrepository.PackageUploadDownloadRepository;
 
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class MyBatisPackageUploadService implements PackageUploadService {
+public class MyBatisPackageUploadDownloadService implements PackageUploadDownloadService {
+    @Autowired
+    private PackageUploadDownloadRepository packageUploadDownloadRepository;
     @Value("${pres.swegnhan.packhelper.debunzipshellpath}")
     private String DEB_UNZIP_SHELL_PATH;
     @Value("${pres.swegnhan.packhelper.tempdirpath}")
@@ -35,7 +39,57 @@ public class MyBatisPackageUploadService implements PackageUploadService {
         DebAnalysisPattern.debAnalysis(pack, controlFileContext);
         return Optional.ofNullable(pack);
     }
-//    public void saveWithAnalysis(Package pack, String tempFilePath) throws Exception{
+
+    @Override
+    @Transactional
+    public String download(HttpServletRequest request, HttpServletResponse response, String fileName) {
+        System.out.println(fileName);
+//        String fileName = "sydney_hotels_the_park_hyatt.jpeg";// 文件名?/home/caixujie/IdeaProjects/packhub
+        if (fileName != null) {
+            //设置文件路径
+            File file = new File("/home/caixujie/IdeaProjects/packhub/" + fileName);
+            //File file = new File(realPath , fileName);
+            if (file.exists()) {
+                response.setContentType("application/force-download");// 设置强制下载不打开
+                response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
+                byte[] buffer = new byte[1024];
+                FileInputStream fis = null;
+                BufferedInputStream bis = null;
+                try {
+                    fis = new FileInputStream(file);
+                    bis = new BufferedInputStream(fis);
+                    OutputStream os = response.getOutputStream();
+                    int i = bis.read(buffer);
+                    while (i != -1) {
+                        os.write(buffer, 0, i);
+                        i = bis.read(buffer);
+                    }
+                    packageUploadDownloadRepository.updateDownloads(fileName);
+                    return "下载成功";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (bis != null) {
+                        try {
+                            bis.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (fis != null) {
+                        try {
+                            fis.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+        return "下载失败";
+    }
+
+    //    public void saveWithAnalysis(Package pack, String tempFilePath) throws Exception{
 //        String tempThreadFolder = UUID.randomUUID().toString();
 //        try {
 //            Process unzipProcess = Runtime.getRuntime().exec(DEB_UNZIP_SHELL_PATH + " " + tempFilePath + " " + tempThreadFolder);
@@ -65,7 +119,7 @@ public class MyBatisPackageUploadService implements PackageUploadService {
     private static Pattern descriptionPattern = Pattern.compile("Description: (.*\n( .*\n)*)");
 
     public  static void debAnalysis(Package pack, String context) {
-        System.out.println(context);
+//        System.out.println(context);
         Matcher packageMatcher = packagePattern.matcher(context);
         if (packageMatcher.find())
             pack.setName(packageMatcher.group(1));
@@ -75,13 +129,13 @@ public class MyBatisPackageUploadService implements PackageUploadService {
          Matcher descriptionPatternMatcher = descriptionPattern.matcher(context);
 //        if (descriptionPatternMatcher.find())
 //            pack.setDescription(descriptionPatternMatcher.group(2));
-        System.out.println("===============test=================");
+//        System.out.println("===============test=================");
         if(descriptionPatternMatcher.find()) {
             pack.setDescription(descriptionPatternMatcher.group(1));
-            for (int i = 0; i < descriptionPatternMatcher.groupCount(); i++)
-                System.out.println("Group(" + i + "):\n" + descriptionPatternMatcher.group(i));
+            for (int i = 0; i < descriptionPatternMatcher.groupCount(); i++);
+//                System.out.println("Group(" + i + "):\n" + descriptionPatternMatcher.group(i));
         }
-        System.out.println("===============test=================");
+//        System.out.println("===============test=================");
     }
 
 }

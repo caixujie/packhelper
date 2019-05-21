@@ -6,19 +6,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pres.swegnhan.packhelper.application.commandservice.PackageUploadService;
+import pres.swegnhan.packhelper.application.commandservice.PackageUploadDownloadService;
 
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 
 @RequestMapping(path = "/packagefile")
 @RestController
-public class PackageUploadApi {
+public class PackageUploadDownloadApi {
     @Value("${pres.swegnhan.packhelper.tempdirpath}")
     private String TEMP_DIR_PATH;
 
     @Autowired
-    private PackageUploadService packageUploadService;
+    private PackageUploadDownloadService packageUploadService;
 
     @PostMapping
     public ResponseEntity<?> fileUpload(@RequestParam(value ="addPicture") MultipartFile multipartFile) throws Exception {
@@ -26,7 +27,7 @@ public class PackageUploadApi {
         HttpStatus status ;
         status = HttpStatus.NOT_FOUND;
         if (multipartFile == null) {
-            System.out.println("111");
+//            System.out.println("111");
             return new ResponseEntity<>(null, status);
 
         }
@@ -43,5 +44,10 @@ public class PackageUploadApi {
         }
 
         return ResponseEntity.of(packageUploadService.upload(file));
+    }
+
+    @GetMapping(path = "/download/{name}")
+    public String downloadFile(HttpServletRequest request, HttpServletResponse response, @PathVariable("name") String fileName) {
+        return packageUploadService.download(request,response,fileName);
     }
 }

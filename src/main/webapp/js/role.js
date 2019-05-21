@@ -49,12 +49,14 @@ $(function(){
 
 //更新角色
 function updateRole(roleId,dom){
-    var checkbox1="#addUserPanel input:checkbox[name='supsList']:checked";
+    var checkbox1="#editRole input:checkbox[name='supsList']:checked";
 	//获取要更新的数据
-	var mytest = {
+	var forDebug = $("#addHeadPicture");
+        alert("cxjcxj"+forDebug.val());
+	var mytest1 = {
             name : $("#editRole #caonimaM").val(),
             version : $("#editRole #versM").val(),
-            packFileName : $("#editRole packFileTypeM").val(),
+            packFileName : $("#editRole #packFileTypeM").val(),
             description : $("#editRole #descM").val(),
             category : $("#editRole #roleCategoryM").val(),
             supsList : $.parseJSON("["+getCheckBoxValueOne(checkbox1)+"]")
@@ -62,19 +64,21 @@ function updateRole(roleId,dom){
         	};
 	var newRoleName=$("#editRole form input[type=text]").val();
 	$.ajax({
-		url:basePath+"/role/update",
-		type:"post",
-		data:{"id":roleId,"name":newRoleName},
-		dataType:"json",
+		url:"./package",
+		type:"put",
+		contentType:'application/json',
+		data:JSON.stringify(mytest1),
+		dataType:"text",
 		success:function(result){
-			if(result.status==0){
-				//数据库已经更新成功了
-				alert(result.message);
-				//把页面的那行数据更新
-				dom.find("td:eq(2)").html(newRoleName);
-			}else if(result.status==1){
-				alert(result.message);
-			}
+//			if(result.status==0){
+//				//数据库已经更新成功了
+//				alert(result.message);
+//				//把页面的那行数据更新
+//				dom.find("td:eq(2)").html(newRoleName);
+//			}else if(result.status==1){
+//				alert(result.message);
+//			}
+            findRoles(1);
 		},
 		error:function(){
 			alert("请求失败!")
@@ -132,13 +136,14 @@ function addRole(){
 //    	var description=$("#addUserPanel #desc").val();
 //    	var category=$("#addUserPanel #roleCategory").val();
 //    	var supsList="["+getCheckBoxValueOne()+"]";
+        var checkbox2="#addUserPanel input:checkbox[name='supsList']:checked";
         var mytest = {
         name : $("#addUserPanel #caonima").val(),
         version : $("#addUserPanel #vers").val(),
         packFileName : $("#addUserPanel #packFileName").val(),
         description : $("#addUserPanel #desc").val(),
         category : $("#addUserPanel #roleCategory").val(),
-        supsList : $.parseJSON("["+getCheckBoxValueOne()+"]")
+        supsList : $.parseJSON("["+getCheckBoxValueOne(checkbox2)+"]")
 
     	};
     	$.ajax({
@@ -298,9 +303,9 @@ function cbMassage(){
 
 
 }
-function getCheckBoxValueOne(){
+function getCheckBoxValueOne(boxp){
     //获取name="box"选中的checkBox的元素
-    var  ids = $("#addUserPanel input:checkbox[name='supsList']:checked");
+    var  ids = $(boxp);
     var data = "";
 //    alert("ids="+ids);
     for(var i = 0; i < ids.length; i ++){

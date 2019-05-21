@@ -1,11 +1,14 @@
 package pres.swegnhan.packhelper.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pres.swegnhan.packhelper.application.commandservice.PackageQueryService;
 import pres.swegnhan.packhelper.core.Page;
 import pres.swegnhan.packhelper.core.Result;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RequestMapping(path = "/packages")
 @RestController
@@ -22,7 +25,7 @@ public class PackageQueryApi {
         return result;
     }
     @GetMapping(path = "/all")
-    public ResponseEntity<?> queryPackages() {
+    public ResponseEntity<?> queryPackages(HttpServletRequest httpRequest) {
        return ResponseEntity.of(packagequeryservice.queryAll());
     }
 }
