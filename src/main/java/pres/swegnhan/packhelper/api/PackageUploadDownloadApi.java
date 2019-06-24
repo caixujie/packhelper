@@ -23,6 +23,7 @@ public class PackageUploadDownloadApi {
 
     @PostMapping
     public ResponseEntity<?> fileUpload(@RequestParam(value ="addPicture") MultipartFile multipartFile) throws Exception {
+//      public ResponseEntity<?> fileUpload(@RequestParam("file") MultipartFile multipartFile) throws Exception {
         System.out.println("in this");
         HttpStatus status ;
         status = HttpStatus.NOT_FOUND;

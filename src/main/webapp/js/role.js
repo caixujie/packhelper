@@ -276,6 +276,7 @@ function cbMassage(){
     alert(forDebug.val());
     $.ajaxFileUpload({
     		url:"./packagefile",
+//    		url:"www.abc.com",
     		secureuri:false,
     		fileElementId:"addHeadPicture",
     		type:"post",
