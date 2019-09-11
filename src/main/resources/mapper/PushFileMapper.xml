@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="pres.swegnhan.packhelper.infrastructure.commandrepository.PackageUploadDownloadRepository">
+<mapper namespace="pres.swegnhan.packhelper.infrastructure.pushfilerepository.PushFileRepository">
 
     <insert id="insert">
-        insert into rel_user_package(pack_uid,user_mac,create_at)
+        insert into `rel_user_package`(`pack_uid`,`pack_name`,`user_mac`,`user_ip`,`task_name`,`description`)
         values (
         #{pushUserPackage.packUid},
+        #{pushUserPackage.packName},
         #{pushUserPackage.userMac},
-        now(),
+        #{pushUserPackage.userIp},
+        #{pushUserPackage.taskName},
+        #{pushUserPackage.description})
     </insert>
 
     <delete id="delete">
@@ -16,4 +19,17 @@
         where pack_uid = #{pushUserPackage.packUid} and user_mac = #{pushUserPackage.userMac}
     </delete>
 
+    <select id="findByMac"
+            parameterType="java.lang.String"
+            resultType="pres.swegnhan.packhelper.core.PushUserPackages">
+        select
+        *
+        from rel_user_package
+        where user_mac = #{mac}
+    </select>
+
+
+
 </mapper>
+
+

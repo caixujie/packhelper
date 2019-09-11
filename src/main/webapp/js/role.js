@@ -16,7 +16,6 @@ function updateRoleClick(uid,name,version,filetype){
 	$("#editRole #versM").val(version);
 	$("#editRole #packFileTypeM").val(filetype);
 	$("#editRole #descM").val(dom.find("td:eq(6)").html());
-
 }
 $(function(){
 
@@ -49,6 +48,7 @@ $(function(){
 
 //更新角色
 function updateRole(roleId,dom){
+
     var checkbox1="#editRole input:checkbox[name='supsList']:checked";
 	//获取要更新的数据
 	var forDebug = $("#addHeadPicture");
@@ -87,6 +87,7 @@ function updateRole(roleId,dom){
 	//关闭修改的modal框
 	$("#editRole").modal("toggle");
 	return false;
+
 }
 
 
@@ -137,6 +138,7 @@ function addRole(){
 //    	var category=$("#addUserPanel #roleCategory").val();
 //    	var supsList="["+getCheckBoxValueOne()+"]";
         var checkbox2="#addUserPanel input:checkbox[name='supsList']:checked";
+//        alert(getCheckBoxValueOne(checkbox2));
         var mytest = {
         name : $("#addUserPanel #caonima").val(),
         version : $("#addUserPanel #vers").val(),

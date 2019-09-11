@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pres.swegnhan.packhelper.infrastructure.userrepository.UserQueryRepoditory">
+
+    <select id="findIdByWhere"
+            parameterType="java.lang.String"
+            resultType="java.lang.String">
+        select
+        ip
+        from tb_user
+        where level3 in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findMacByIp"
+            parameterType="java.lang.String"
+            resultType="java.lang.String">
+        select
+        mac
+        from tb_user
+        where ip = #{ip}
+    </select>
+
+
+</mapper>

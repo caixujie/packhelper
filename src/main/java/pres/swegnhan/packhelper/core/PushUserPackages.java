@@ -1,17 +1,19 @@
 package pres.swegnhan.packhelper.core;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.joda.time.DateTime;
 
 @Setter
 @Getter
 @NoArgsConstructor
-@EqualsAndHashCode(of = "ip")
+@EqualsAndHashCode(of = "userIp")
+@ToString
 public class PushUserPackages {
-    String iP;
-    String packUid;
-    String userMac;
-    String packName;
+   private String userIp;
+   private String packUid;
+   private String userMac;
+   private String packName;
+   private String taskName;
+   private String description;
+   private DateTime create_at;
 }

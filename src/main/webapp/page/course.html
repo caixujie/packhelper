@@ -1,13 +1,13 @@
 <div role="tabpanel"  >
 <!-- 页签导航 -->
   <ul class="nav nav-tabs " role="tablist" >
-    <li role="presentation" class="active"><a href="#course" aria-controls="course" role="tab" data-toggle="tab" >课程</a></li>
-    <li role="presentation"><a href="#addCoursePanel" aria-controls="addCoursePanel" role="tab" data-toggle="tab">新增</a></li>
+    <li role="presentation"><a href="#course" aria-controls="course" role="tab" data-toggle="tab" >推送记录</a></li>
+    <li role="presentation" class="active"><a href="#addCoursePanel" aria-controls="addCoursePanel" role="tab" data-toggle="tab">实时推送</a></li>
   </ul>
 <!--end-->
 <!-- 页签面板-->
 <div class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="course">
+  <div role="tabpanel" class="tab-pane  " id="course">
   	<div class="panel panel-default">
 	    <div class="panel-body">
 
@@ -199,37 +199,38 @@
   </nav>
 
   </div>
-
-  <div role="tabpanel" class="tab-pane" id="addCoursePanel">
+<!--推送任务-->
+  <div role="tabpanel" class="tab-pane active" id="addCoursePanel">
   <div class="panel panel-default">
   <div class="panel-body">
   <form class="form-horizontal" action="" method="post">
 
   <div class="form-group">
-    <label class="col-md-2 control-label" for="courseName">课程名称:</label>
+    <label class="col-md-2 control-label" for="taskName">任务名称:</label>
       <div class="col-md-8">
-        <input type="text" id="courseName"  class="form-control">
+        <input type="text" id="taskName"  class="form-control">
       </div>
   </div>
 
   <div class="form-group">
-  <label class="col-md-2 control-label" for="recommended">推荐指数: </label>
+  <label class="col-md-2 control-label" for="searchTree">推送单位: </label>
   <div class="col-md-8">
-  <input type="number" id="recommended"  class="form-control">
+    <div id="searchTree"></div>
+
   </div>
   </div>
 
   <div class="form-group">
-              <label class="col-md-2 control-label" for="picture">课程图片:</label>
+              <label class="col-md-2 control-label" for="pushfile">推送内容:</label>
               <div class="col-md-8">
-                <input type="file" id="picture">
+                <input type="file" id="pushfile" name="pushfile">
               </div>
             </div>
 
   <div class="form-group">
-  <label class="col-md-2 control-label" for="courseDesc">课程描述:</label>
+  <label class="col-md-2 control-label" for="courseDesc">任务描述:</label>
   <div class="col-md-8">
-  <textarea class="form-control" rows="4"></textarea>
+  <textarea id="courseDesc" class="form-control" rows="4"></textarea>
   </div>
   </div>
 
@@ -245,3 +246,4 @@
   </div>
   </div>
 </div><!-- /tab-content-->
+</div>

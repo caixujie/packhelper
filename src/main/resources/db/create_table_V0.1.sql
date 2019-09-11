@@ -61,20 +61,25 @@ CREATE TABLE `tb_user`(
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mac` varchar(17) NOT NULL,
   `ip` varchar(15) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `level1` varchar(255) NOT NULL,
   `level2` varchar(255) NOT NULL,
   `level3` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY (`mac`),
-)
+  UNIQUE KEY (`mac`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `rel_user_package`(
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pack_uid` varchar(255) NOT NULL,
+  `pack_name` varchar(255) NOT NULL,
   `user_mac` varchar(17) NOT NULL,
+  `user_ip` varchar(15) NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `task_name` varchar(255),
+  `description` varchar(255),
   PRIMARY KEY (`id`),
   UNIQUE KEY `uid` (`pack_uid`,`user_mac`),
-  FOREIGN KEY (`pack_uid`) REFERENCES `tb_package` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`user_mac`) REFERENCES `tb_user` (`mac`) ON DELETE CASCADE ON UPDATE CASCADE
-)
+--  FOREIGN KEY (`pack_uid`) REFERENCES `tb_package` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
+--  FOREIGN KEY (`user_mac`) REFERENCES `tb_user` (`mac`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

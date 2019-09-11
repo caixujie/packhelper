@@ -14,5 +14,5 @@ public interface PackageQueryService {
 
    public Optional<List<Package>> queryAll();
 
-
+   public String queryUidByName(String fileName);
 }

@@ -11,6 +11,16 @@
         from tb_package
         where name like #{roleKeyword}
     </select>
+
+    <select id="findUidByName"
+            parameterType="java.lang.String"
+            resultType="java.lang.String">
+        select
+        uid
+        from tb_package
+        where url = #{fileName}
+    </select>
+
     <select id="getPackage"
             parameterType="pres.swegnhan.packhelper.core.Page"
             resultMap="packages">

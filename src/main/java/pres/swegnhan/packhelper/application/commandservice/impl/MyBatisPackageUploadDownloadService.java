@@ -49,6 +49,9 @@ public class MyBatisPackageUploadDownloadService implements PackageUploadDownloa
             File file = new File("/home/caixujie/IdeaProjects/packhub/" + fileName);
             //File file = new File(realPath , fileName);
             if (file.exists()) {
+                response.reset();
+                response.setCharacterEncoding("utf-8");
+                response.setContentLength((int) file.length());
                 response.setContentType("application/force-download");// 设置强制下载不打开
                 response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
                 byte[] buffer = new byte[1024];

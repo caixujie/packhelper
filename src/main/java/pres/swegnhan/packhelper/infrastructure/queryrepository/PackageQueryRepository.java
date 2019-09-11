@@ -15,6 +15,8 @@ public interface PackageQueryRepository {
 
     public List<Package> getPackageall();
 
+    public String findUidByName(String fileName);
+
     // 添加
 //    public int addPackage(Package pack);
 //

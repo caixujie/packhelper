@@ -59,4 +59,9 @@ public class MyBatisPackageQueryService implements PackageQueryService {
     public Optional<List<Package>> queryAll() {
         return Optional.of(packageQueryRepository.getPackageall());
     }
+
+    @Override
+    public String queryUidByName(String fileName) {
+        return packageQueryRepository.findUidByName(fileName);
+    }
 }
